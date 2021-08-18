@@ -1,13 +1,18 @@
 import boto3
+from botocore.client import Config
+
+session = boto3.session.Session()
+region = session.region_name
+#region = 'us-east-2'
 
 def upload_file(file_name, bucket):
     object_name = file_name
-    s3_client = boto3.client('s3')
+    s3_client = boto3.client('s3',endpoint_url=f'https://s3.{region}.amazonaws.com',config=Config(signature_version='s3v4',s3={'addressing_style': 'path'}))
     response = s3_client.upload_file(file_name, bucket, object_name)
     return response
 
 def list_files(bucket):
-    s3_client = boto3.client('s3')
+    s3_client = boto3.client('s3',endpoint_url=f'https://s3.{region}.amazonaws.com',config=Config(signature_version='s3v4',s3={'addressing_style': 'path'}))
     contents = []
     try:
         for item in s3_client.list_objects(Bucket=bucket)['Contents']:
@@ -18,7 +23,7 @@ def list_files(bucket):
     return contents
 
 def show_image(bucket):
-    s3_client = boto3.client('s3')
+    s3_client = boto3.client('s3',endpoint_url=f'https://s3.{region}.amazonaws.com',config=Config(signature_version='s3v4',s3={'addressing_style': 'path'}))
     # location = boto3.client('s3').get_bucket_location(Bucket=bucket)['LocationConstraint']
     public_urls = []
     try:
@@ -30,4 +35,3 @@ def show_image(bucket):
         pass
     # print("[DATA] : The contents inside show_image = ", public_urls)
     return public_urls
-    
