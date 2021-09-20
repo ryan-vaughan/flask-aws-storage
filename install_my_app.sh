@@ -21,7 +21,7 @@ cat > run.sh << EOF
 REGION=\$(curl http://169.254.169.254/latest/meta-data/placement/region)
 IID=\$(curl http://169.254.169.254/latest/meta-data/instance-id)
 ENV=\$(aws --region \$REGION ec2 describe-tags --filters Name=resource-id,Values=\$IID | jq -r '.Tags[]|select(.Key == "environment")|.Value')
-FLASK_ENV=\$ENV /usr/local/bin/pipenv run flask run
+FLASK_ENV=\$ENV REGION=\$REGION IID=\$IID /usr/local/bin/pipenv run flask run
 EOF
 chmod 755 run.sh
 
