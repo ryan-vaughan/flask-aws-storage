@@ -13,7 +13,7 @@ region = urllib.request.urlopen('http://169.254.169.254/latest/meta-data/placeme
 @app.route("/")
 def home():
     contents = list_files(BUCKET)
-    return render_template('index.html'IID=instance,REGION=region)
+    return render_template('index.html',IID=instance,REGION=region)
 
 @app.route("/pics")
 def list():
