@@ -1,4 +1,5 @@
 import os
+import urllib.request
 from flask import Flask, render_template, request, redirect, send_file
 from s3_functions import list_files, upload_file, show_image
 from werkzeug.utils import secure_filename
@@ -6,11 +7,13 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
 BUCKET = "lats-image-data"
+instance = urllib.request.urlopen('http://169.254.169.254/latest/meta-data/instance-id').read().decode()
+region = urllib.request.urlopen('http://169.254.169.254/latest/meta-data/placement/availability-zone').read().decode()
 
 @app.route("/")
 def home():
     contents = list_files(BUCKET)
-    return render_template('index.html')
+    return render_template('index.html'IID=instance,REGION=region)
 
 @app.route("/pics")
 def list():
