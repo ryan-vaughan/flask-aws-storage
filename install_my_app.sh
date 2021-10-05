@@ -40,7 +40,7 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 
-sed -i s/lats-image-data/{{user `s3_bucket`}}/ app.py
+sed -i s/lats-image-data/img-mgr-tf-bucket/ app.py
 systemctl daemon-reload
 systemctl start imgmgr
 
