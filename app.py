@@ -6,7 +6,6 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
-#BUCKET = "flasksfdfds"
 BUCKET = os.environ.get('BUCKET_NAME')
 instance = urllib.request.urlopen('http://169.254.169.254/latest/meta-data/instance-id').read().decode()
 region = urllib.request.urlopen('http://169.254.169.254/latest/meta-data/placement/availability-zone').read().decode()
